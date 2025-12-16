@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>WishperNet Chat</title>
+    <link rel="stylesheet" href="styles-responsive.css">
+</head>
+<body>
+    <!-- Particle background animation -->
+    <div id="particleContainer" class="particle-container"></div>
+
+    <div class="chat-container fullscreen">
+        <!-- Header -->
+        <div class="chat-header neon-header">
+            <div class="header-content">
+                <div class="header-info">
+                    <div class="avatar neon-avatar">
+                        <svg width="32" height="32" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="100" cy="100" r="95" fill="rgba(0,255,150,0.1)"/>
+                            <path d="M100 30 L140 50 L140 100 C140 130 120 150 100 150 C80 150 60 130 60 100 L60 50 Z" fill="#00FF99" opacity="0.9"/>
+                            <rect x="85" y="75" width="30" height="25" rx="3" fill="#FF006E"/>
+                            <path d="M95 75 L95 70 C95 65 99 60 100 60 C101 60 105 65 105 70 L105 75" stroke="#FF006E" stroke-width="3" fill="none" stroke-linecap="round"/>
+                            <path d="M70 110 L80 130 L90 110 L100 130 L110 110 L120 130 L130 110" stroke="#00D9FF" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="header-text">
+                        <h2 id="roomTitle">WishperNet Chat</h2>
+                        <p id="roomStatus" class="status-text neon-text">Connecting...</p>
+                        <p id="userCount" class="user-count neon-text">0 users online</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="shareBtn" class="icon-btn neon-btn" title="Share Room Link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M18 16.08C17.24 16.08 16.56 16.38 16.04 16.85L8.91 12.7C8.96 12.47 9 12.24 9 12C9 11.76 8.96 11.53 8.91 11.3L15.96 7.19C16.5 7.69 17.21 8 18 8C19.66 8 21 6.66 21 5C21 3.34 19.66 2 18 2C16.34 2 15 3.34 15 5C15 5.24 15.04 5.47 15.09 5.7L8.04 9.81C7.5 9.31 6.79 9 6 9C4.34 9 3 10.34 3 12C3 13.66 4.34 15 6 15C6.79 15 7.5 14.69 8.04 14.19L15.16 18.34C15.11 18.55 15.08 18.77 15.08 19C15.08 20.61 16.39 21.92 18 21.92C19.61 21.92 20.92 20.61 20.92 19C20.92 17.39 19.61 16.08 18 16.08Z" fill="#00FF99"/>
+                        </svg>
+                    </button>
+                    <button id="leaveBtn" class="icon-btn neon-btn danger" title="Leave Chat">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M17 7L22 12L17 17M22 12H9M15 4H6C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20H15" stroke="#FF006E" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="messages-container" id="messagesContainer">
+            <div class="messages" id="messages">
+                <div class="system-message welcome-msg">
+                    <p>🔐 Welcome to WishperNet! Your messages are end-to-end encrypted.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-container neon-input-container">
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    placeholder="Type your message..." 
+                    autocomplete="off"
+                    maxlength="1000"
+                >
+                <button id="sendBtn" class="send-btn neon-send-btn" title="Send Message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="#00FF99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal neon-modal">
+        <div class="modal-content neon-modal-content">
+            <div class="modal-header neon-modal-header">
+                <h3>📤 Share Chat Room</h3>
+                <button class="close-btn neon-close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Share this link with others to join the chat:</p>
+                <div class="link-container">
+                    <input type="text" id="roomLink" readonly class="neon-input">
+                    <button id="copyBtn" class="btn-copy neon-btn">Copy</button>
+                </div>
+                <p class="info-text">⏱️ Link expires when all users leave the room</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
